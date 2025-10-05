@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image , TouchableOpacity} from 'react-native'
-import { Picker } from '@react-native-picker/picker';
 import { fetchTvShow } from '../services/fetchTvShow';
 import { useNavigation } from '@react-navigation/native';
 import { Dropdown } from 'react-native-element-dropdown';

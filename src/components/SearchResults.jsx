@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { fetchThroughSearch } from '../services/fetchThroughSearch';
-import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native'; 
 
 
