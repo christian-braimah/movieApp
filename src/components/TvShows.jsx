@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, FlatList, ActivityIndicator, Image , TouchableO
 import { Picker } from '@react-native-picker/picker';
 import { fetchTvShow } from '../services/fetchTvShow';
 import { useNavigation } from '@react-navigation/native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export default function TvShows() {
     const [tvShow, setTvShow] = useState([]);
@@ -23,22 +24,31 @@ export default function TvShows() {
 
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w1280';
 
+    const dropdownData =[
+        {label:'Popular', value:'popular'},
+        {label:'On the Air', value:'on_the_air'},
+        {label:'Airing Today', value:'airing_today'},
+        {label:'Top Rated', value:'top_rated'},
+    ]
+
 
     return (
         <View style={style.container}>
             <View style={style.picker}>
-                <Picker
-                selectedValue={showType}
-                onValueChange={(value, index) => setShowType(value)}
-                testID="category-picker"
-                style={{ height: 50, width: '100%' }} 
-                itemStyle={{ height: 54, color: '#000'}}
-                >
-                    <Picker.Item label="Popular" value="popular" />
-                    <Picker.Item label="On the air" value="on_the_air" />
-                    <Picker.Item label="Airing Today" value="airing_today" />
-                    <Picker.Item label="Top Rated" value="top_rated" />
-                </Picker>
+            <Dropdown
+                style={style.dropdown}
+                data ={dropdownData}
+                value={showType}
+                labelField="label"
+                valueField="value"
+                placeholder={ "Now Playing"}
+                searchPlaceholderTextColor={"#000000"}
+                onChange={
+                    item => setShowType(item.value)
+                }
+                />
+
+
             </View>
         
             <FlatList
@@ -122,5 +132,14 @@ const style = StyleSheet.create({
     btnText:{
         color:"white",
         textAlign:"center"
+    },
+    dropdown: {
+        marginBottom:10,
+        marginTop:10,
+        height: 50,
+        border: '#fefefe',
+        borderWidth: 0.3,
+        borderRadius:8,
+        padding:10,
     }
 });

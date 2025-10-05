@@ -1,5 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
+import { Dropdown } from 'react-native-element-dropdown';
+
 import { View, 
     Text, 
     StyleSheet,
@@ -8,12 +10,19 @@ import { View,
     ActivityIndicator,
     Image }
 from 'react-native'
-import { Picker } from '@react-native-picker/picker';
 import { fetchMovie } from '../services/fetchMovie';
 import {
-    createStaticNavigation,
     useNavigation,
 } from '@react-navigation/native';
+
+
+const dropdownData =[
+    {label:'Now Playing', value:'now_playing'},
+    {label:'Popular', value:'popular'},
+    {label:'Top Rated', value:'top_rated'},
+    {label:'Upcoming', value:'upcoming'},
+];
+
 
 export default function Movies() {
 
@@ -49,18 +58,20 @@ export default function Movies() {
     return (
         <View style={style.container}>
             <View style={style.picker}>
-                <Picker
-                selectedValue={movieType}
-                onValueChange={(value) => setMovieType(value)}
-                testID="category-picker"
-                style={{ height: 50, width: '100%' }} 
-                itemStyle={{ height: 54, color: '#000'}}
-                >
-                    <Picker.Item label="Now Playing" value="now_playing" />
-                    <Picker.Item label="Popular" value="popular" />
-                    <Picker.Item label="Top Rated" value="top_rated" />
-                    <Picker.Item label="Upcoming" value="upcoming" />
-                </Picker>
+
+                <Dropdown
+                style={style.dropdown}
+                data ={dropdownData}
+                value={movieType}
+                labelField="label"
+                valueField="value"
+                placeholder={ "Now Playing"}
+                searchPlaceholderTextColor={"#000000"}
+                onChange={
+                    item => setMovieType(item.value)
+                }
+                />
+
             </View>
         
             <FlatList
@@ -147,5 +158,14 @@ const style = StyleSheet.create({
     btnText:{
         color:"white",
         textAlign:"center"
+    },
+    dropdown: {
+        marginBottom:10,
+        marginTop:10,
+        height: 50,
+        border: '#fefefe',
+        borderWidth: 0.3,
+        borderRadius:8,
+        padding:10,
     }
 });

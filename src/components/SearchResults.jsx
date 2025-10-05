@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import {Dropdown} from 'react-native-element-dropdown'
 import { 
     View, 
     TextInput, 
@@ -36,6 +37,12 @@ export default function SearchResults() {
 
     const imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
+    const dropdownData=[
+        {label:"Multi", value:'multi'},
+        {label:"Movie", value:'movie'},
+        {label:"TV", value:'tv'},
+    ]
+
     return (
         <View style={style.container}>
             <Text>Search Movie / TV Show Name</Text>
@@ -52,17 +59,20 @@ export default function SearchResults() {
             <View style={{ flexDirection: "row", width: "100%", gap: 10 }}>
                 <View style={{ flex: 1, flexDirection:"column"}}>
                     <Text>Choose Search Type</Text>
-                    <Picker
-                        selectedValue={searchType}
-                        onValueChange={(value) => setSearchType(value)}
-                        testID="category-picker"
-                        style={{ height: 'auto', width: '100%' }} 
-                        itemStyle={{ height: 54, color: '#000'}}
-                        >
-                            <Picker.Item label="Multi" value="multi" />
-                            <Picker.Item label="Movie" value="movie" />
-                            <Picker.Item label="TV" value="tv" />
-                    </Picker>
+
+                    <Dropdown
+                    style={style.dropdown}
+                    data ={dropdownData}
+                    value={searchType}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={ "Multi"}
+                    searchPlaceholderTextColor={"#000000"}
+                    onChange={
+                        item => setSearchType(item.value)
+                    }
+                    />
+                    
 
                     <View>
                     <TouchableOpacity style={style.button} onPress={handleSearch}>
@@ -193,5 +203,14 @@ const style = StyleSheet.create({
         width: 100,
         height: 150,
         borderRadius: 5,
+    },
+    dropdown: {
+        marginBottom:10,
+        marginTop:10,
+        height: 50,
+        border: '#fefefe',
+        borderWidth: 0.3,
+        borderRadius:8,
+        padding:10,
     }
 });
